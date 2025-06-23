@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=4 uid="uid://kipxqh1i08fa"]
+
+[ext_resource type="Script" uid="uid://mqsyslj7rc3s" path="res://Scripts/chunk.gd" id="1_byomg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_byomg"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_bp61h"]
+_surfaces = [{
+"aabb": AABB(0, 0, 0, 3, 1e-05, 3),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqqo+AAAAAKuqKj8AAAAAAACAPwAAAAAAAAAAq6qqPquqqj6rqqo+q6oqP6uqqj4AAIA/q6qqPgAAAACrqio/q6qqPquqKj+rqio/q6oqPwAAgD+rqio/AAAAAAAAgD+rqqo+AACAP6uqKj8AAIA/AACAPwAAgD8="),
+"format": 34359742487,
+"index_count": 54,
+"index_data": PackedByteArray("AAAEAAEAAQAEAAUAAQAFAAIAAgAFAAYAAgAGAAMAAwAGAAcABAAIAAUABQAIAAkABQAJAAYABgAJAAoABgAKAAcABwAKAAsACAAMAAkACQAMAA0ACQANAAoACgANAA4ACgAOAAsACwAOAA8A"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAQAAAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAIA/AACAPwAAAAAAAIA/AAAAQAAAAAAAAIA/AABAQAAAAAAAAIA/AAAAAAAAAAAAAABAAACAPwAAAAAAAABAAAAAQAAAAAAAAABAAABAQAAAAAAAAABAAAAAAAAAAAAAAEBAAACAPwAAAAAAAEBAAAAAQAAAAAAAAEBAAABAQAAAAAAAAEBA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/78=")
+}]
+
+[node name="Chunk" type="Node3D"]
+script = ExtResource("1_byomg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_byomg")
+mesh = SubResource("ArrayMesh_bp61h")

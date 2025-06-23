@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cemnbau3c08vk"]
+
+[ext_resource type="PackedScene" uid="uid://yndxdk6tjing" path="res://Scenes/freecam.tscn" id="1_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://kipxqh1i08fa" path="res://Scenes/chunk.tscn" id="2_8gbba"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Freecam" parent="." instance=ExtResource("1_bo1nx")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
+
+[node name="Chunk" parent="." instance=ExtResource("2_8gbba")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
