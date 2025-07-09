@@ -1,7 +1,10 @@
 extends Camera3D
 
-var moveSpeed := 1.5
-var lookSpeed := 1.0
+var moveSpeed := 30.0
+var lookSpeed := 2.0
+
+func _ready() -> void:
+	Global.player = self
 
 func _process(delta: float) -> void:
 	var dir = Input.get_vector("Left", "Right", "Forward", "Backward")
@@ -16,7 +19,3 @@ func _process(delta: float) -> void:
 	
 	rotation.y += Input.get_axis("Look Right", "Look Left") * lookSpeed * delta
 	rotation.x += Input.get_axis("Look Down", "Look Up") * lookSpeed * delta
-	
-	#print(position)
-	#print(rotation)
-	#print("")

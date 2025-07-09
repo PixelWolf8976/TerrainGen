@@ -15,6 +15,14 @@ run/main_scene="uid://cemnbau3c08vk"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://Scripts/global.gd"
+
+[debug]
+
+settings/stdout/print_fps=true
+
 [input]
 
 Forward={
