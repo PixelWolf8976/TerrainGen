@@ -9,10 +9,13 @@ var oldRes = 0
 
 func _ready():
 	updateChunk()
+	add_to_group(str(oldRes))
 
 func updateChunk():
 	var newRes = Global.getRes((Global.player.position - position).length())
 	if oldRes != newRes:
+		remove_from_group(str(oldRes))
+		add_to_group(str(newRes))
 		mesh.mesh = generateChunk(newRes, Global.chunkSize)
 
 func generateChunk(resolution: int, size: float) -> ArrayMesh:

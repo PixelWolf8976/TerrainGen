@@ -5,6 +5,12 @@ var lookSpeed := 2.0
 
 func _ready() -> void:
 	Global.player = self
+	
+	for key in Global.LODs.keys():
+		var sphere: MeshInstance3D = MeshInstance3D.new()
+		sphere.mesh = SphereMesh.new()
+		sphere.scale = Vector3(key, key, key)
+		add_child(sphere)
 
 func _process(delta: float) -> void:
 	var dir = Input.get_vector("Left", "Right", "Forward", "Backward")
