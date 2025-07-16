@@ -10,7 +10,7 @@ func _ready() -> void:
 		var sphere: MeshInstance3D = MeshInstance3D.new()
 		sphere.mesh = SphereMesh.new()
 		sphere.scale = Vector3(key, key, key)
-		add_child(sphere)
+		#add_child(sphere)
 
 func _process(delta: float) -> void:
 	var dir = Input.get_vector("Left", "Right", "Forward", "Backward")
@@ -25,3 +25,8 @@ func _process(delta: float) -> void:
 	
 	rotation.y += Input.get_axis("Look Right", "Look Left") * lookSpeed * delta
 	rotation.x += Input.get_axis("Look Down", "Look Up") * lookSpeed * delta
+	
+	if Input.is_action_just_pressed("Spawn Ball"):
+		var ball = load("res://Scenes/ball.tscn").instantiate()
+		ball.position = position
+		add_sibling(ball)

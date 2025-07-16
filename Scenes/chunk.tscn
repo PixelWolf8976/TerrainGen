@@ -8,3 +8,9 @@ script = ExtResource("1_byomg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = ExtResource("2_bp61h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(4.37114e-08, 0, 1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
