@@ -7,10 +7,25 @@ func _ready() -> void:
 	Global.player = self
 	
 	for key in Global.LODs.keys():
-		var sphere: MeshInstance3D = MeshInstance3D.new()
-		sphere.mesh = SphereMesh.new()
-		sphere.scale = Vector3(key, key, key)
-		#add_child(sphere)
+		var newArea3D := Area3D.new()
+		var newSphere := SphereShape3D.new()
+		var newCollision := CollisionShape3D.new()
+		
+		newSphere.radius = key
+		newArea3D.name = str(Global.LODs[key])
+		newCollision.shape = newSphere
+		
+		newArea3D.body_entered.connect(onAreaEntered.bind(newArea3D.name))
+		newArea3D.body_exited.connect(onAreaEntered.bind(newArea3D.name))
+		
+		newArea3D.add_child(newCollision)
+		add_child(newArea3D)
+
+func onAreaEntered(body: Node3D, areaResolution: String):
+	var areaResNum: int = int(areaResolution)
+	
+	if body.get_parent().has_method("setChunk"):
+		body.get_parent().setChunk(areaResNum)
 
 func _process(delta: float) -> void:
 	var dir = Input.get_vector("Left", "Right", "Forward", "Backward")

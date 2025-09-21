@@ -1,16 +1,24 @@
 extends Node
 
+const DEBUG: bool = false
+
 var chunkSize: float = 100.0
 var player
 var chunks := []
 var iterator := 0
 
+var amplitude := 10.0
+
+var noiseFrequency := 0.005
+var noiseOctaves := 1
+var noiseSeed := 0
+
+var collisionRes := 25.0
+
 var LODs: Dictionary = { # Distance from player : Chunk resolution in quads
-	100: 100,
 	200: 50,
 	300: 25,
-	400: 10,
-	500: 10 # Last one is needed to set chunks to their lowest res
+	400: 10
 }
 
 #func _process(delta: float) -> void: # Idea in area around player check what res should be

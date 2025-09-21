@@ -3,42 +3,57 @@ extends Node3D
 @onready var mesh := $MeshInstance3D
 @onready var col := $StaticBody3D/CollisionShape3D
 
-@export var amplitude: float = 50.0 # How much the hight noise effects height
+var noise := FastNoiseLite.new()
 
-var oldRes = 0
+var lods: Dictionary = {}
+
+var oldRes: int = 0
 
 func _ready():
+	noise.frequency = Global.noiseFrequency
+	noise.fractal_octaves = Global.noiseOctaves
+	
+	if Global.noiseSeed != 0:
+		noise.seed = Global.noiseSeed
+	
 	col.shape = HeightMapShape3D.new()
-	updateChunk()
+	col.shape.map_depth = Global.collisionRes + 1.0
+	col.shape.map_width = Global.collisionRes + 1.0
+	col.scale = Vector3(100.0 / Global.collisionRes, 1.0, 100.0 / Global.collisionRes)
+	genCol()
+	
+	renderChunk()
+	
 	add_to_group(str(oldRes))
 
-func updateChunk():
-	var newRes = Global.getRes((Global.player.position - position).length())
+func genCol():
+	var currentVert: int = 0
 	
-	if oldRes != newRes:
-		var needsCol := false
-		if newRes <= Global.LODs.keys()[0]:
-			needsCol = true
-		
-		remove_from_group(str(oldRes))
-		add_to_group(str(newRes))
-		mesh.mesh = generateChunk(newRes, Global.chunkSize, needsCol)
+	var stepSize := Global.chunkSize / Global.collisionRes
+	
+	for x in range(Global.collisionRes + 1):
+		for z in range(Global.collisionRes + 1):
+			var world_x = (x - (Global.collisionRes / 2.0)) * stepSize
+			var world_z = (z - (Global.collisionRes / 2.0)) * stepSize
+			var height = noise.get_noise_2d(world_x + position.x, world_z + position.z) * Global.amplitude
+			
+			col.shape.map_data[currentVert] = height
+			currentVert += 1
 
-func generateChunk(resolution: int, size: float, genCol: bool) -> ArrayMesh:
-	var currentVert := 0
+func renderChunk():
+	var res = Global.getRes((Global.player.position - position).length() - (Global.chunkSize / 2.0))
+	setChunk(res)
+
+func setChunk(resolution: int):
+	if Global.DEBUG:
+		mesh.material_override = StandardMaterial3D.new()
+		var foo := float(resolution) / 100.0
+		var chunkColor := Color(1, 0, 0).lerp(Color(0, 1, 0), foo)
+		mesh.material_override.albedo_color = chunkColor
 	
-	if genCol:
-		col.shape.map_depth = resolution + 1.0
-		col.shape.map_width = resolution + 1.0
-	else:
-		col.shape.map_depth = 0
-		col.shape.map_width = 0
-	
-	var noise := FastNoiseLite.new()
-	#noise.seed = 0
-	noise.frequency = 0.005
-	noise.fractal_octaves = 1
-	
+	mesh.mesh = generateChunk(resolution, Global.chunkSize)
+
+func generateChunk(resolution: int, size: float) -> ArrayMesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	
@@ -51,11 +66,7 @@ func generateChunk(resolution: int, size: float, genCol: bool) -> ArrayMesh:
 		for z in range(resolution + 1):
 			var world_x = (x - (resolution / 2.0)) * step
 			var world_z = (z - (resolution / 2.0)) * step
-			var height = noise.get_noise_2d(world_x + position.x, world_z + position.z) * amplitude
-			
-			if genCol:
-				col.shape.map_data[currentVert] = height
-				currentVert += 1
+			var height = noise.get_noise_2d(world_x + position.x, world_z + position.z) * Global.amplitude
 			
 			var vertex = Vector3(world_x, height, world_z)
 			verts[x].append(vertex)
