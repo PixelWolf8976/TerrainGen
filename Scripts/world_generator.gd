@@ -1,6 +1,6 @@
 extends Node3D
 
-var worldSize: int = 50 # World size in chunks
+var worldSize: int = 100 # World size in chunks
 
 var chunk := preload("res://Scenes/chunk.tscn")
 

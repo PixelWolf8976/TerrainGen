@@ -7,8 +7,6 @@ var player
 var chunks := []
 var iterator := 0
 
-var amplitude := 10.0
-
 var noiseFrequency := 0.005
 var noiseOctaves := 1
 var noiseSeed := 0

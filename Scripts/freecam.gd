@@ -1,6 +1,6 @@
 extends Camera3D
 
-var moveSpeed := 30.0
+var moveSpeed := 100.0
 var lookSpeed := 2.0
 
 func _ready() -> void:

@@ -26,6 +26,14 @@ func _ready():
 	
 	add_to_group(str(oldRes))
 
+func getHeight(x: float, z: float) -> float:
+	#return noise.get_noise_2d(x, z) * 50.0
+	var heightNoise: FastNoiseLite = FastNoiseLite.new()
+	heightNoise.frequency = 0.00025
+	heightNoise.fractal_octaves = 1
+	
+	return noise.get_noise_2d(x, z) * ((0.5 + (heightNoise.get_noise_2d(x, z) / 2.0)) * 100.0)
+
 func genCol():
 	var currentVert: int = 0
 	
@@ -33,9 +41,9 @@ func genCol():
 	
 	for x in range(Global.collisionRes + 1):
 		for z in range(Global.collisionRes + 1):
-			var world_x = (x - (Global.collisionRes / 2.0)) * stepSize
-			var world_z = (z - (Global.collisionRes / 2.0)) * stepSize
-			var height = noise.get_noise_2d(world_x + position.x, world_z + position.z) * Global.amplitude
+			var world_x: float = (x - (Global.collisionRes / 2.0)) * stepSize
+			var world_z: float = (z - (Global.collisionRes / 2.0)) * stepSize
+			var height = getHeight(world_x + position.x, world_z + position.z)
 			
 			col.shape.map_data[currentVert] = height
 			currentVert += 1
@@ -66,7 +74,7 @@ func generateChunk(resolution: int, size: float) -> ArrayMesh:
 		for z in range(resolution + 1):
 			var world_x = (x - (resolution / 2.0)) * step
 			var world_z = (z - (resolution / 2.0)) * step
-			var height = noise.get_noise_2d(world_x + position.x, world_z + position.z) * Global.amplitude
+			var height = getHeight(world_x + position.x, world_z + position.z)
 			
 			var vertex = Vector3(world_x, height, world_z)
 			verts[x].append(vertex)
