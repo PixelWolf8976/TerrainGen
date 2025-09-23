@@ -32,7 +32,15 @@ func getHeight(x: float, z: float) -> float:
 	heightNoise.frequency = 0.00025
 	heightNoise.fractal_octaves = 1
 	
-	return noise.get_noise_2d(x, z) * ((0.5 + (heightNoise.get_noise_2d(x, z) / 2.0)) * 100.0)
+	if Global.noiseSeed != 0:
+		heightNoise.seed = Global.noiseSeed
+	
+	var heightModifyer = heightNoise.get_noise_2d(x, z)
+	
+	var positiveHeight = noise.get_noise_2d(x, z) * ((0.5 + (heightModifyer / 2.0)) * 100.0)
+	var negativeHeight = heightModifyer * 500.0
+	
+	return lerpf(positiveHeight, negativeHeight, (clampf(heightModifyer, -1, 1) / 2.0) + 0.5)
 
 func genCol():
 	var currentVert: int = 0

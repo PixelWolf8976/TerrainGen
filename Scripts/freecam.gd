@@ -27,7 +27,14 @@ func onAreaEntered(body: Node3D, areaResolution: String):
 	if body.get_parent().has_method("setChunk"):
 		body.get_parent().setChunk(areaResNum)
 
+var time: float = 0.0
+
 func _process(delta: float) -> void:
+	time += delta
+	if time >= 5.0:
+		print(position)
+		time = 0
+	
 	var dir = Input.get_vector("Left", "Right", "Forward", "Backward")
 	
 	dir *= moveSpeed * delta
