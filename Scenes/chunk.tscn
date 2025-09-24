@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://kipxqh1i08fa"]
+[gd_scene load_steps=5 format=3 uid="uid://kipxqh1i08fa"]
 
 [ext_resource type="Script" uid="uid://mqsyslj7rc3s" path="res://Scripts/chunk.gd" id="1_byomg"]
 [ext_resource type="Material" uid="uid://0xpp3m7g5jg1" path="res://terrainMat.tres" id="2_bp61h"]
+[ext_resource type="Material" uid="uid://c6slw3jlva7p3" path="res://Water.tres" id="3_s0xx0"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s0xx0"]
+material = ExtResource("3_s0xx0")
+size = Vector2(100, 100)
 
 [node name="Chunk" type="Node3D"]
 script = ExtResource("1_byomg")
@@ -14,3 +19,7 @@ transform = Transform3D(4.37114e-08, 0, 1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_s0xx0")
+surface_material_override/0 = ExtResource("3_s0xx0")
