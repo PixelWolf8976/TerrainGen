@@ -40,7 +40,7 @@ func getHeight(x: float, z: float) -> float:
 	var positiveHeight = ((noise.get_noise_2d(x, z) / 2.0) + 0.5) * (heightNoise.get_noise_2d(x, z) * 100.0)
 	
 	if heightModifyer < 0:
-		positiveHeight = heightModifyer * 50.0
+		positiveHeight = heightModifyer * 500.0
 	
 	return positiveHeight
 

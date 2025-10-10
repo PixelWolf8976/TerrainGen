@@ -9,7 +9,7 @@ var iterator := 0
 
 var noiseFrequency := 0.005
 var noiseOctaves := 1
-var noiseSeed := 1
+var noiseSeed := 0
 
 var collisionRes := 25.0
 
